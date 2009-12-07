@@ -12,7 +12,6 @@ DBSlayer benefits include:
 Requirements
 ------------
 
-
 * [Node.js](http://nodejs.org/) (tested with v0.1.21)
 * [DBSlayer](http://code.nytimes.com/projects/dbslayer/) (tested with beta-12)
 
@@ -35,16 +34,19 @@ To be truly non-blocking, `Server::fetch` has to return a promise and not the re
 
 	connection.query("SELECT * FROM TABLE").addCallback(function(result){
 		// insert ready
-		for (var i = 0, l = result.rows.length; )
+		for (var i = 0, l = result.ROWS.length; i < l; i++){
+			var row = result.ROWS[i];
+			// do something with the data
+		}
 	});
 	
 If you want to capture MySQL errors, subscribe to the 'error' event
 
-	connection.query("...").addErrback(function(){
-		alert('mysql error!');
+	connection.query("SELECT * FROM inexistent_table").addErrback(function(error, errno){
+		alert('mysql error! + ' error);
 	});
 	
-Aside from query, the commands `stat`, `client_info`, `host_info`, `server_version` and `client_version` are available, which provide the corresponding information.
+Aside from query, the commands `stat`, `client_info`, `host_info`, `server_version` and `client_version` are available, which provide the respective information about the server.
 
 Installing DBSlayer
 -------------------
