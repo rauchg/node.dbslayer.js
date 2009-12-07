@@ -33,7 +33,6 @@ and then perform a query:
 To be truly non-blocking, `Server::fetch` has to return a promise and not the result immediately. This means that in order to be able to perform queries in a designated order or access the result, you'll have to use callbacks:
 
 	connection.query("SELECT * FROM TABLE").addCallback(function(result){
-		// insert ready
 		for (var i = 0, l = result.ROWS.length; i < l; i++){
 			var row = result.ROWS[i];
 			// do something with the data
