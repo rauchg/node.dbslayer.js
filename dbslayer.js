@@ -21,7 +21,7 @@ Server = this.Server = function(host, port, timeout){
 
 Server.prototype.fetch = function(object, key){
   var connection = http.createClient(this.port, this.host),
-      request = connection.get('/db?' + escape(JSON.stringify(object)), {'host': this.host}),
+      request = connection[connection.get ? 'get' : 'request']('/db?' + escape(JSON.stringify(object)), {'host': this.host}),
       promise = new process.Promise();
   
   promise.timeout(this.timeout);
